@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Forever Love 🤍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. Global & Background (Minimalist/iPhone Theme) --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f0f5 0%, #e0e0e8 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            color: #333;
+        }
+
+        /* --- 2. Floating Emojis (Subtle) --- */
+        .floating-emoji {
+            position: absolute;
+            bottom: -50px;
+            font-size: 26px;
+            animation: floatUp linear infinite;
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+            text-shadow: 0 0 5px #ddd, 0 0 10px #ccc;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- 3. Containers (Glassmorphism - iPhone Style) --- */
+        .container {
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 40px;
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+            width: 90%;
+            max-width: 420px;
+            z-index: 100;
+            transition: all 0.5s ease;
+            position: relative;
+            color: #333;
+        }
+        
+        /* Message Page specific size and SCROLL FIX */
+        #message-page.container {
+            max-width: 600px;
+            max-height: 80vh; 
+            overflow-y: auto; 
+            text-align: left;
+        }
+        
+        /* --- 4. Typography & Inputs --- */
+        h1 { font-family: 'Dancing Script', cursive; color: #d63384; font-size: 3.5em; margin: 0 0 10px 0; text-shadow: none; }
+        p { font-size: 1.1em; color: #555; margin-bottom: 20px; }
+        
+        input { 
+            padding: 12px; 
+            border-radius: 12px; 
+            border: 1px solid #ccc; 
+            background: #f7f7f7;
+            width: 70%; 
+            margin-bottom: 15px; 
+            outline: none; 
+            font-size: 1.1em; 
+            text-align: center; 
+            color: #333;
+            transition: 0.3s;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #d63384);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 12px; 
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: transform 0.2s;
+            font-weight: 600;
+        }
+        button:hover { transform: translateY(-2px); }
+
+        /* General Utilities */
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 1s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .error { color: #e74c3c; font-weight: 500; margin-top: 10px; display: none; }
+        
+        /* Message Text Specifics */
+        #message-text {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #333;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+            text-align: justify;
+        }
+        .text-visible { opacity: 1 !important; }
+
+        /* --- 5. Polaroid Stack (Memories Page) --- */
+        #gallery-wrapper { max-width: 90vw; width: 500px; padding-top: 50px; }
+        #gallery-container { position: relative; width: 320px; height: 450px; margin: 0 auto; perspective: 1000px; }
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            padding: 15px 15px 60px 15px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
+        .card img, .card video { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; pointer-events: none; }
+        .card::after {
+            content: 'Our Moment';
+            position: absolute;
+            bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: #d63384;
+        }
+        .swipe-left { animation: flyLeft 0.8s forwards; }
+        .swipe-right { animation: flyRight 0.8s forwards; }
+        @keyframes flyLeft { to { transform: translate(-150%, -20%) rotate(-30deg); opacity: 0; } }
+        @keyframes flyRight { to { transform: translate(150%, 20%) rotate(30deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="login-page" class="container fade-in">
+        <h1>Hello, My Heart 🤍</h1>
+        <p>Enter the key to our world...</p>
+        <input type="password" id="password-input" placeholder="Secret Key">
+        <br>
+        <button onclick="attemptLogin()">Unlock The Memories ✨</button>
+        <p id="error-msg" class="error"></p> 
+    </div>
+
+    <div id="message-page" class="container hidden">
+        <h1 style="text-align: center;">For You, My Love</h1>
+        <div id="message-text">
+            <p style="text-align: center; font-style: italic; font-weight: 700; margin-bottom: 25px;">— This is a space dedicated only to us. —</p>
+            <p>Every single day with you is a gift I never dared to imagine. You are the warmth on a cold morning, the strength when I feel weak, and the quiet truth that makes everything else beautiful. I didn't just fall in love with you; I walked into a life that finally made sense because you were standing there.</p>
+            <p>You have filled my world with a kind of joy that runs deeper than happiness. It's a peaceful, constant knowledge that I am exactly where I belong. Thank you for your kindness, your laughter, and for being the beautiful, genuine soul that you are. I look forward to every tiny moment we share, from the simplest silence to the wildest adventures.</p>
+            <p>I love the way we built this life together, piece by piece, memory by memory. This isn't just a collection of pictures and videos; it's the physical evidence of the incredible journey we are on. Now, take a deep breath, and let's revisit the best parts of our story so far. You are my forever love.</p>
+            <p style="text-align: right; margin-top: 30px; font-style: italic;">Yours always, &hearts;</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="startGallery()">View Our Story 🎬</button>
+        </div>
+    </div>
+
+    <div id="gallery-wrapper" class="hidden fade-in">
+        <div id="gallery-container">
+            </div>
+        <p style="color: #333; text-shadow: 0 0 5px #fff; font-weight: 700; margin-top: 20px;">
+            Tap/Click to toss the cards and reveal the next memory! 👆
+        </p>
+    </div>
+    
+    <div id="final-promise" class="hidden" 
+         style="
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0, 0, 0, 0.95); 
+            z-index: 200; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            color: white;
+            text-align: center;
+         ">
+        <h1 style="font-size: 5em; color: #ffebf0; margin-bottom: 20px; text-shadow: 0 0 10px #ff6b6b;">A Final Promise</h1>
+        <p style="font-size: 2em; max-width: 80%; line-height: 1.5; font-weight: 500; color: #f0f0f0;">
+            And here is the last memory, engraved in stone: <br>
+            **I will never leave your side, not for a moment. My soul is bound to yours, forever.**
+        </p>
+        <p style="font-size: 1.5em; margin-top: 50px; color: #ffc0cb;">
+            I am yours, always. &hearts;
+        </p>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION ---
+        const password = "892025"; // CHANGE THIS PASSWORD!
+        
+        // Sweet hints for wrong password 
+        const sweetHints = [
+            "That's not the key to our world, sweetheart! Maybe a special date? 🔑",
+            "Oops! Wrong code, my love. Think of something only we know. 😉",
+            "It's not just a password, it's a memory. Try again! ❤️",
+            "Almost there! Is it our favorite number?",
+            "Don't worry, my beautiful. You'll get it on the next try! 💋",
+            "Think back to where our adventure began. That moment holds the key. 🌹"
+        ];
+        
+        // List your files here: 1 PHOTO (First) followed by 6 VIDEOS
+        const mediaFiles = [
+            'img1.jpg',   // 1. The Starting Photo
+            'vid1.mp4',   // 2. Video 1
+            'vid2.mp4',   // 3. Video 2
+            'vid3.mp4',   // 4. Video 3
+            'vid4.mp4',   // 5. Video 4
+            'vid5.mp4',   // 6. Video 5
+            'vid6.mp4',   // 7. Video 6
+        ];
+
+        // --- 2. LOGIC ---
+        
+        function attemptLogin() {
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-msg');
+            const music = document.getElementById('bg-music');
+            
+            if(input === password) {
+                // Success logic
+                music.play().catch(e => {
+                    console.log("Music blocked, starting silently.");
+                });
+                
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('message-page').classList.remove('hidden');
+                document.getElementById('message-page').classList.add('fade-in');
+                
+                // Show text slowly after message page loads
+                setTimeout(() => {
+                    document.getElementById('message-text').classList.add('text-visible');
+                }, 500);
+
+            } else {
+                // Error Logic: Display random sweet hint & shake
+                const randomIndex = Math.floor(Math.random() * sweetHints.length);
+                errorMsg.innerText = sweetHints[randomIndex];
+                errorMsg.style.display = 'block';
+
+                const inputField = document.getElementById('password-input');
+                inputField.style.animation = "shake 0.5s";
+                setTimeout(() => inputField.style.animation = "none", 500);
+            }
+        }
+
+        function startGallery() {
+            document.getElementById('message-page').classList.add('hidden');
+            const galleryWrapper = document.getElementById('gallery-wrapper');
+            galleryWrapper.classList.remove('hidden');
+            galleryWrapper.classList.add('fade-in');
+            
+            initStack();
+        }
+
+        // --- 3. POLAROID STACK LOGIC ---
+        function initStack() {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = ''; 
+
+            // Reverse to ensure the first file in the array (img1.jpg) is on top
+            [...mediaFiles].reverse().forEach((file, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                
+                // Random Rotation
+                const randomRotate = Math.random() * 10 - 5; 
+                card.style.transform = `rotate(${randomRotate}deg)`;
+                card.style.zIndex = index; 
+
+                // Check if Video or Image
+                if (file.endsWith('.mp4') || file.endsWith('.webm')) {
+                    const vid = document.createElement('video');
+                    vid.src = file;
+                    vid.loop = true;
+                    vid.muted = true; 
+                    vid.playsInline = true;
+                    vid.autoplay = true; 
+                    card.appendChild(vid);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = file;
+                    card.appendChild(img);
+                }
+
+                // Add Click Event to Swipe
+                card.onclick = function() {
+                    if(card.classList.contains('swipe-left') || card.classList.contains('swipe-right')) return;
+
+                    const direction = Math.random() > 0.5 ? 'swipe-right' : 'swipe-left';
+                    card.classList.add(direction);
+                    
+                    setTimeout(() => {
+                        card.remove();
+                        // Final Promise Trigger
+                        if (container.children.length === 0) {
+                            document.getElementById('gallery-wrapper').classList.add('hidden');
+                            const finalPromise = document.getElementById('final-promise');
+                            finalPromise.classList.remove('hidden');
+                            finalPromise.classList.add('fade-in'); 
+                        }
+                    }, 800);
+                };
+
+                container.appendChild(card);
+            });
+        }
+
+        // --- 4. BACKGROUND ANIMATION ---
+        function createBackground() {
+            const body = document.body;
+            const emojis = ['🤍', '✨', '🌹', '💍', '❤️']; 
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.classList.add('floating-emoji');
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                body.appendChild(el);
+                setTimeout(() => el.remove(), 7000);
+            }, 300);
+        }
+        createBackground();
+        
+        // Inject Shake Animation CSS
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-10px); } 50% { transform: translateX(10px); } 75% { transform: translateX(-10px); } 100% { transform: translateX(0); } }`;
+        document.head.appendChild(style);
+
+    </script>
+</body>
+</html>
